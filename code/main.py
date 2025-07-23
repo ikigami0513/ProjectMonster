@@ -16,6 +16,7 @@ from dialog import DialogTree
 from game_data import *
 from support import *
 from monster import Monster
+from menu import Menu
 from pokedex import Pokedex
 from battle import Battle
 from evolution import Evolution
@@ -35,7 +36,7 @@ class Game:
             1: Monster('Friolera', 29),
             2: Monster('Larvea', 3),
             3: Monster('Atrox', 24),
-            4: Monster('Sparchu', 24),
+            4: Monster('Sparchu', 10),
             5: Monster('Gulfin', 24),
             6: Monster('Jacana', 2),
             7: Monster('Pouch', 3)
@@ -58,12 +59,15 @@ class Game:
 
         self.import_assets()
         self.setup(self.tmx_maps['world'], "house")
+        self.audio['overworld'].set_volume(0)
         self.audio['overworld'].play(-1)
 
         # overlays
         self.dialog_tree = None
-        self.pokedex = Pokedex(self.player_monster, self.fonts, self.monster_frames)
-        self.pokedex_open = False
+        self.menu = Menu(self.fonts)
+        self.menu_open = False
+        # self.pokedex = Pokedex(self.player_monster, self.fonts, self.monster_frames)
+        # self.pokedex_open = False
         self.battle = None
         self.evolution = None
 
@@ -183,7 +187,7 @@ class Game:
                         character.can_rotate = False
 
             if keys[pygame.K_RETURN]:
-                self.pokedex_open = not self.pokedex_open
+                self.menu_open = not self.menu_open
                 self.player.blocked = not self.player.blocked
 
     def create_dialog(self, character: Character) -> None:
@@ -324,8 +328,8 @@ class Game:
             # overlays
             if self.dialog_tree:
                 self.dialog_tree.update()
-            if self.pokedex_open:
-                self.pokedex.update(dt)
+            if self.menu_open:
+                self.menu.update(dt)
             if self.battle:
                 self.battle.update(dt)
             if self.evolution:
