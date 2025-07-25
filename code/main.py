@@ -303,7 +303,7 @@ class Game:
     def run(self) -> None:
         while True:
             dt = self.clock.tick(self.target_fps) / 1000
-            pygame.display.set_caption(f"Pokémon - {int(self.clock.get_fps())} FPS")
+            pygame.display.set_caption(f"Project Monster - {int(self.clock.get_fps())} FPS")
             self.display_surface.fill('black')
 
             # event loop
