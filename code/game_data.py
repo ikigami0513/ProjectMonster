@@ -1,5 +1,6 @@
 import os
 import json
+from support import get_path
 from typing import Union
 
 
@@ -11,7 +12,7 @@ class Data:
     def get(cls, id: Union[str, int]):
         cached_data = cls._cache.get(id)
         if cached_data is None:
-            with open(os.path.join(cls.path, f"{id}.json"), "r", encoding="utf-8") as f:
+            with open(get_path(cls.path, f"{id}.json"), "r", encoding="utf-8") as f:
                 cached_data = json.load(f)
                 cls._cache[id] = cached_data
         return cached_data
@@ -29,12 +30,12 @@ class Data:
     
 
 class TrainerData(Data):
-    path = "data/trainers/"
+    path = get_path("data", "trainers")
 
 
 class MonsterData(Data):
-    path = "data/monsters/"
+    path = get_path("data", "monsters")
 
 
 class AttackData(Data):
-    path = "data/attacks/"
+    path = get_path("data", "attacks")

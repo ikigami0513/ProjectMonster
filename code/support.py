@@ -1,3 +1,4 @@
+import sys
 from settings import *
 from os.path import join
 from os import walk
@@ -10,31 +11,31 @@ if TYPE_CHECKING:
 # region imports
  
 def import_image(*path, alpha = True, format = 'png'):
-	full_path = join(*path) + f'.{format}'
+	full_path = get_path(*path) + f'.{format}'
 	surf = pygame.image.load(full_path).convert_alpha() if alpha else pygame.image.load(full_path).convert()
 	return surf
 
 def import_folder(*path):
 	frames = []
-	for folder_path, sub_folders, image_names in walk(join(*path)):
+	for folder_path, sub_folders, image_names in walk(get_path(*path)):
 		for image_name in sorted(image_names, key = lambda name: int(name.split('.')[0])):
-			full_path = join(folder_path, image_name)
+			full_path = get_path(folder_path, image_name)
 			surf = pygame.image.load(full_path).convert_alpha()
 			frames.append(surf)
 	return frames
 
 def import_folder_dict(*path):
 	frames = {}
-	for folder_path, sub_folders, image_names in walk(join(*path)):
+	for folder_path, sub_folders, image_names in walk(get_path(*path)):
 		for image_name in image_names:
-			full_path = join(folder_path, image_name)
+			full_path = get_path(folder_path, image_name)
 			surf = pygame.image.load(full_path).convert_alpha()
 			frames[image_name.split('.')[0]] = surf
 	return frames
 
 def import_sub_folders(*path):
 	frames = {}
-	for _, sub_folders, __ in walk(join(*path)):
+	for _, sub_folders, __ in walk(get_path(*path)):
 		if sub_folders:
 			for sub_folder in sub_folders:
 				frames[sub_folder] = import_folder(*path, sub_folder)
@@ -64,7 +65,7 @@ def character_importer(cols, rows, *path):
 
 def all_character_import(*path):
 	new_dict = {}
-	for _, __, image_names in walk(join(*path)):
+	for _, __, image_names in walk(get_path(*path)):
 		for image in image_names:
 			image_name = image.split('.')[0]
 			new_dict[image_name] = character_importer(4, 4, *path, image_name)
@@ -87,14 +88,14 @@ def coast_importer(cols, rows, *path):
 
 def tmx_importer(*path):
 	tmx_dict = {}
-	for folder_path, sub_folders, file_names in walk(join(*path)):
+	for folder_path, sub_folders, file_names in walk(get_path(*path)):
 		for file in file_names:
-			tmx_dict[file.split('.')[0]] = load_pygame(join(folder_path, file))
+			tmx_dict[file.split('.')[0]] = load_pygame(get_path(folder_path, file))
 	return tmx_dict
 
 def monster_importer(cols, rows, *path):
 	monster_dict = {}
-	for folder_path, sub_folders, image_names in walk(join(*path)):
+	for folder_path, sub_folders, image_names in walk(get_path(*path)):
 		for image in image_names:
 			image_name = image.split('.')[0]
 			monster_dict[image_name] = {}
@@ -130,7 +131,7 @@ def outline_creator(frame_dict: Dict[str, Dict[str, pygame.Surface]], width: int
 
 def attack_importer(*path):
 	attack_dict = {}
-	for folder_path, _, image_names in walk(join(*path)):
+	for folder_path, _, image_names in walk(get_path(*path)):
 		for image in image_names:
 			image_name = image.split('.')[0]
 			attack_dict[image_name] = list(import_tilemap(4, 1, folder_path, image_name).values())
@@ -138,9 +139,9 @@ def attack_importer(*path):
 
 def audio_importer(*path):
 	files = {}
-	for folder_path, _, file_names in walk(join(*path)):
+	for folder_path, _, file_names in walk(get_path(*path)):
 		for file_name in file_names:
-			full_path = join(folder_path, file_name)
+			full_path = get_path(folder_path, file_name)
 			files[file_name.split('.')[0]] = pygame.mixer.Sound(full_path)
 
 	return files
@@ -167,6 +168,15 @@ def check_connections(radius: int, entity: 'Entity', target: 'Entity', tolerance
 				return True
 		
 # endregion game
+
+
+def get_path(*path):
+	if hasattr(sys, "_MEIPASS"):
+		base_path = sys._MEIPASS
+	else:
+		base_path = "."
+
+	return join(base_path, *path)
 
 
 def format_with_leading_zeros(number: int, length: int = 3) -> str:

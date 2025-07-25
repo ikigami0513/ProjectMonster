@@ -85,10 +85,10 @@ class Game:
         self.monster_frames['outlines'] = outline_creator(self.monster_frames['monsters'], 4)
 
         self.fonts = {
-            "dialog": pygame.font.Font(os.path.join("graphics", "fonts", "PixeloidSans.ttf"), 30),
-            "regular": pygame.font.Font(os.path.join("graphics", "fonts", "PixeloidSans.ttf"), 18),
-            "small": pygame.font.Font(os.path.join("graphics", "fonts", "PixeloidSans.ttf"), 14),
-            "bold": pygame.font.Font(os.path.join("graphics", "fonts", "dogicapixelbold.otf"), 20)
+            "dialog": pygame.font.Font(get_path("graphics", "fonts", "PixeloidSans.ttf"), 30),
+            "regular": pygame.font.Font(get_path("graphics", "fonts", "PixeloidSans.ttf"), 18),
+            "small": pygame.font.Font(get_path("graphics", "fonts", "PixeloidSans.ttf"), 14),
+            "bold": pygame.font.Font(get_path("graphics", "fonts", "dogicapixelbold.otf"), 20)
         }
 
         self.bg_frames = import_folder_dict("graphics", "backgrounds")
@@ -170,7 +170,7 @@ class Game:
                 )
 
     def input(self) -> None:
-        if not self.dialog_tree and not self.battle:
+        if not self.dialog_tree and not self.battle and not self.menu.is_open:
             keys = pygame.key.get_just_pressed()
             if keys[pygame.K_SPACE]:
                 for character in self.character_sprites:
@@ -181,11 +181,9 @@ class Game:
                         character.can_rotate = False
 
             if keys[pygame.K_RETURN]:
-                if self.menu.current_menu:
-                    self.menu.current_menu = None
-                else:
-                    self.menu.is_open = not self.menu.is_open
-                    self.player.blocked = not self.player.blocked
+                self.menu.open()
+
+        self.player.blocked = self.menu.is_open
 
     def create_dialog(self, character: Character) -> None:
         if not self.dialog_tree:

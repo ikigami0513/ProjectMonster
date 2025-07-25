@@ -2,6 +2,7 @@ import pygame
 from typing import Dict
 from settings import *
 from team import Team
+from timer_ import Timer
 from encyclopedia import Encyclopedia
 from monster import Monster
 
@@ -13,6 +14,7 @@ class Menu:
         self.monster_frames = monster_frames
         self.fonts = fonts
         self.is_open = False
+        self.opening_timer = Timer(100)
 
         self.tint_surf = pygame.Surface((self.display_surface.get_width(), self.display_surface.get_height()))
         self.tint_surf.set_alpha(200)
@@ -25,7 +27,7 @@ class Menu:
         ).move_to(center = (self.display_surface.get_width() / 2, self.display_surface.get_height() / 2))
 
         # Menu options
-        self.options = ["Team", "Inventory", "Encyclopedia", "Save", "Quit"]
+        self.options = ["Team", "Inventory", "Encyclopedia", "Settings", "Save", "Quit"]
 
         # List settings
         self.visible_items = len(self.options)
@@ -37,24 +39,46 @@ class Menu:
         self.team = Team(self.monsters, self.fonts, self.monster_frames)
         self.encyclopedia = Encyclopedia(self.monster_frames, self.fonts)
 
+    def open(self):
+        self.is_open = True
+        self.opening_timer.activate()
+
+    def close(self):
+        self.is_open = False
+        self.opening_timer.deactivate()
+
     def input(self):
+        if self.opening_timer.active:
+            return
+        
         keys = pygame.key.get_just_pressed()
-        if keys[pygame.K_UP]:
-            self.index -= 1
-        if keys[pygame.K_DOWN]:
-            self.index += 1
-        if keys[pygame.K_SPACE]:
-            option = self.options[self.index]
-            if option == "Team":
-                self.current_menu = self.team
-            elif option == "Inventory":
-                print("Inventory")
-            elif option == "Encyclopedia":
-                self.current_menu = self.encyclopedia
-            elif option == "Save":
-                print("Save")
-            elif option == "Quit":
-                print("Quit")
+        if self.current_menu is None:
+            if keys[pygame.K_UP]:
+                self.index -= 1
+
+            if keys[pygame.K_DOWN]:
+                self.index += 1
+
+            if keys[pygame.K_RETURN]:
+                option = self.options[self.index]
+                if option == "Team":
+                    self.current_menu = self.team
+                elif option == "Inventory":
+                    print("Inventory")
+                elif option == "Encyclopedia":
+                    self.current_menu = self.encyclopedia
+                elif option == "Settings":
+                    print("Settings")
+                elif option == "Save":
+                    print("Save")
+                elif option == "Quit":
+                    print("Quit")
+
+        if keys[pygame.K_ESCAPE]:
+            if self.current_menu:
+                self.current_menu = None
+            else:
+                self.close()
 
         # Loop index around
         self.index = self.index % len(self.options)
@@ -83,9 +107,10 @@ class Menu:
             self.display_surface.blit(text_surf, text_rect)
 
     def update(self, dt: float):
+        self.opening_timer.update()
+        self.input()
         if self.current_menu:
             self.current_menu.update(dt)
         else:
-            self.input()
             self.display_surface.blit(self.tint_surf, (0, 0))
             self.display()
