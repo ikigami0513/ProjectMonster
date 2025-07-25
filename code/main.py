@@ -26,7 +26,8 @@ class Game:
     def __init__(self) -> None:
         pygame.init()
         self.display_surface = pygame.display.set_mode((WINDOW_WIDTH, WINDOW_HEIGHT))
-        pygame.display.set_caption("Pokémon")
+        pygame.display.set_caption("Project Monster")
+        self.target_fps = 60
         self.clock = pygame.time.Clock()
         self.encounter_timer = Timer(2000, func = self.monster_encounter)
 
@@ -299,7 +300,7 @@ class Game:
 
     def run(self) -> None:
         while True:
-            dt = self.clock.tick() / 1000
+            dt = self.clock.tick(self.target_fps) / 1000
             pygame.display.set_caption(f"Pokémon - {int(self.clock.get_fps())} FPS")
             self.display_surface.fill('black')
 

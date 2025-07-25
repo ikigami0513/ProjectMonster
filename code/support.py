@@ -168,3 +168,6 @@ def check_connections(radius: int, entity: 'Entity', target: 'Entity', tolerance
 		
 # endregion game
 
+
+def format_with_leading_zeros(number: int, length: int = 3) -> str:
+	return str(number).zfill(length)

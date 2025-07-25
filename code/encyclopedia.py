@@ -1,6 +1,7 @@
 import pygame
 from game_data import MonsterData
 from save_ import Save
+from support import format_with_leading_zeros
 from settings import *
 from typing import List, Dict
 
@@ -75,13 +76,13 @@ class Encyclopedia:
             item_rect = pygame.FRect(self.main_rect.left, top, self.list_width, self.item_height)
 
             if monster["status"] == "unknown":
-                text_surf = self.fonts['regular'].render(f"{monster['data']['number']} # " + "?" * len(monster["monster"]), False, text_color)
+                text_surf = self.fonts['regular'].render(f"{format_with_leading_zeros(monster['data']['number'])} # " + "?" * len(monster["monster"]), False, text_color)
                 text_rect = text_surf.get_frect(midleft = item_rect.midleft + pygame.Vector2(90, 0))
  
                 icon_surf = self.ui_frames['cross']
                 icon_rect = icon_surf.get_frect(center = item_rect.midleft + pygame.Vector2(45, 0))
             else:
-                text_surf = self.fonts['regular'].render(f"{monster['data']['number']} # {monster['data']['name']}", False, text_color)
+                text_surf = self.fonts['regular'].render(f"{format_with_leading_zeros(monster['data']['number'])} # {monster['data']['name']}", False, text_color)
                 text_rect = text_surf.get_frect(midleft = item_rect.midleft + pygame.Vector2(90, 0))
 
                 icon_surf = self.icon_frames[monster["data"]["name"]]
