@@ -1,0 +1,8 @@
+{
+    "target": "opponent",
+    "amount": 1.1,
+    "cost": 20,
+    "element": "fire",
+    "animation": "fire",
+    "name": "spark"
+}

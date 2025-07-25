@@ -2,7 +2,7 @@ import pygame
 from monster import Monster
 from sprites import MonsterSprite, MonsterNameSprite, MonsterLevelSprite, MonsterStatsSprite, MonsterOutlineSprite, AttackSprite, TimedSprite
 from groups import BattleSprites
-from game_data import ATTACK_DATA
+from game_data import AttackData
 from entities import Character
 from support import draw_bar
 from settings import *
@@ -14,7 +14,7 @@ from random import choice
 class Battle:
     def __init__(
         self, player_monsters: Dict[int, Monster], opponent_monsters: Dict[int, Monster], 
-        monster_frames: Dict[str, List[pygame.Surface]], bg_surf: pygame.Surface, fonts: Dict[str, pygame.Surface],
+        monster_frames: Dict[str, List[pygame.Surface]], bg_surf: pygame.Surface, fonts: Dict[str, pygame.font.Font],
         end_battle: Callable[[Character], None], character: Optional[Character],
         sounds: Dict[str, pygame.mixer.Sound]
     ) -> None:
@@ -137,7 +137,7 @@ class Battle:
                 if self.selection_mode == 'attacks':
                     self.selection_mode = 'target'
                     self.selected_attack = self.current_monster.monster.get_abilities(all = False)[self.indexes['attacks']]
-                    self.selection_side = ATTACK_DATA[self.selected_attack]['target']
+                    self.selection_side = AttackData.get(self.selected_attack)['target']
 
                 if self.selection_mode == 'general':
                     if self.indexes['general'] == 0:  # attacks
@@ -185,12 +185,14 @@ class Battle:
             monster_sprite.monster.paused = True if option == 'pause' else False
 
     def apply_attack(self, target_sprite: MonsterSprite, attack: str, amount: int):
+        attack_data = AttackData.get(attack)
+
         # play an animation
-        AttackSprite(target_sprite.rect.center, self.monster_frames['attacks'][ATTACK_DATA[attack]['animation']], self.battle_sprites)
-        self.sounds[ATTACK_DATA[attack]['animation']].play()
+        AttackSprite(target_sprite.rect.center, self.monster_frames['attacks'][attack_data['animation']], self.battle_sprites)
+        self.sounds[attack_data['animation']].play()
 
         # get correct attack damage amount (defense, element)
-        attack_element = ATTACK_DATA[attack]["element"]
+        attack_element = attack_data["element"]
         target_element = target_sprite.monster.element
 
         # double attack
@@ -241,7 +243,7 @@ class Battle:
 
     def opponent_attack(self):
         ability = choice(self.current_monster.monster.get_abilities())
-        side = ATTACK_DATA[ability]['target']
+        side = AttackData.get(ability)['target']
         if side == 'player':
             random_target = choice(self.opponent_sprites.sprites())
         else:
@@ -297,7 +299,7 @@ class Battle:
 
             # text
             if selected:
-                element = ATTACK_DATA[ability]['element']
+                element = AttackData.get(ability)['element']
                 text_color = COLORS[element] if element != 'normal' else COLORS['black']
             else:
                 text_color = COLORS['light']

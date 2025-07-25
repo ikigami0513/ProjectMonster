@@ -1,0 +1,8 @@
+{
+    "target": "opponent",
+    "amount": 2,
+    "cost": 15,
+    "element": "fire",
+    "animation": "explosion",
+    "name": "annihilate"
+}

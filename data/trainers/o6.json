@@ -1,0 +1,33 @@
+{
+    "id": "o6",
+    "monsters": {
+        "0": [
+            "Finsta",
+            15
+        ],
+        "1": [
+            "Finsta",
+            15
+        ],
+        "2": [
+            "Finsta",
+            15
+        ]
+    },
+    "dialog": {
+        "default": [
+            "I love skating!",
+            "FIGHT!"
+        ],
+        "defeated": [
+            "Good luck with the boss",
+            "It's so cold in here"
+        ]
+    },
+    "directions": [
+        "down"
+    ],
+    "look_around": false,
+    "defeated": false,
+    "biome": "ice"
+}

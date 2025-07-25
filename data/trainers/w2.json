@@ -1,0 +1,36 @@
+{
+    "id": "w2",
+    "monsters": {
+        "0": [
+            "Friolera",
+            25
+        ],
+        "1": [
+            "Gulfin",
+            20
+        ],
+        "2": [
+            "Draem",
+            24
+        ],
+        "3": [
+            "Finiette",
+            30
+        ]
+    },
+    "dialog": {
+        "default": [
+            "It's so cold in here",
+            "maybe a fight will warm me up"
+        ],
+        "defeated": [
+            "Good luck with the boss!"
+        ]
+    },
+    "directions": [
+        "right"
+    ],
+    "look_around": true,
+    "defeated": false,
+    "biome": "ice"
+}

@@ -2,11 +2,11 @@ import pygame
 from monster import Monster
 from support import draw_bar
 from settings import *
-from game_data import MONSTER_DATA, ATTACK_DATA
+from game_data import MonsterData, AttackData
 from typing import Dict
 
 
-class Pokedex:
+class Team:
     def __init__(self, monsters: Dict[int, Monster], fonts: Dict[str, pygame.font.Font], monster_frames: Dict[str, Dict[str, pygame.Surface]]) -> None:
         self.display_surface = pygame.display.get_surface()
         self.fonts = fonts
@@ -18,7 +18,7 @@ class Pokedex:
         self.monster_frames = monster_frames['monsters']
         self.ui_frames = monster_frames['ui']
 
-        self.tint_surf = pygame.Surface((WINDOW_WIDTH, WINDOW_HEIGHT))
+        self.tint_surf = pygame.Surface((self.display_surface.get_width(), self.display_surface.get_height()))
         self.tint_surf.set_alpha(200)
 
         # dimensions
@@ -36,13 +36,15 @@ class Pokedex:
 
         # max values
         self.max_stats = {}
-        for data in MONSTER_DATA.values():
+        for monster in self.monsters.values():
+            data = MonsterData.get(monster.name)
             for stat, value in data['stats'].items():
                 if stat != 'element':
                     if stat not in self.max_stats:
                         self.max_stats[stat] = value
                     else:
                         self.max_stats[stat] = value if value > self.max_stats[stat] else self.max_stats[stat]
+
         self.max_stats['health'] = self.max_stats.pop('max_health')
         self.max_stats['energy'] = self.max_stats.pop('max_energy')
 
@@ -167,7 +169,7 @@ class Pokedex:
 
         energybar_rect = pygame.FRect((0, 0), (bar_data['width'], bar_data['height'])).move_to(midtop = (bar_data['right_side'], bar_data['top']))
         draw_bar(self.display_surface, energybar_rect, monster.energy, monster.get_stat('max_energy'), COLORS['blue'], COLORS['black'], radius = 1)
-        ep_text = self.fonts['regular'].render(f"HP: {int(monster.energy)} / {int(monster.get_stat('max_energy'))}", False, COLORS['white'])
+        ep_text = self.fonts['regular'].render(f"Energy: {int(monster.energy)} / {int(monster.get_stat('max_energy'))}", False, COLORS['white'])
         ep_rect = ep_text.get_frect(midleft = energybar_rect.midleft + pygame.Vector2(10, 0))
         self.display_surface.blit(ep_text, ep_rect)
 
@@ -211,7 +213,7 @@ class Pokedex:
         self.display_surface.blit(ability_text_surf, ability_text_rect)
 
         for index, ability in enumerate(monster.get_abilities()):
-            element = ATTACK_DATA[ability]['element']
+            element = AttackData.get(ability)['element']
 
             text_surf = self.fonts['regular'].render(ability, False, COLORS['black'])
             x = ability_rect.left + index % 2 * ability_rect.width / 2

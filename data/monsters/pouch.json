@@ -1,0 +1,18 @@
+{
+    "stats": {
+        "element": "plant",
+        "max_health": 23,
+        "max_energy": 25,
+        "attack": 4,
+        "defense": 12,
+        "recovery": 7,
+        "speed": 1.5
+    },
+    "abilities": {
+        "0": "scratch",
+        "5": "spark"
+    },
+    "evolve": null,
+    "number": 16,
+    "name": "Pouch"
+}

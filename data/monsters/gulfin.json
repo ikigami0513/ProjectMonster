@@ -1,0 +1,21 @@
+{
+    "stats": {
+        "element": "water",
+        "max_health": 18,
+        "max_energy": 20,
+        "attack": 3,
+        "defense": 10,
+        "recovery": 6,
+        "speed": 2
+    },
+    "abilities": {
+        "0": "scratch",
+        "5": "spark"
+    },
+    "evolve": [
+        "Finiette",
+        32
+    ],
+    "number": 8,
+    "name": "Gulfin"
+}

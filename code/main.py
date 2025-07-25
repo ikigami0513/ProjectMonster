@@ -17,9 +17,9 @@ from game_data import *
 from support import *
 from monster import Monster
 from menu import Menu
-from pokedex import Pokedex
 from battle import Battle
 from evolution import Evolution
+from save_ import Save
 
 
 class Game:
@@ -31,16 +31,10 @@ class Game:
         self.encounter_timer = Timer(2000, func = self.monster_encounter)
 
         # player monster
-        self.player_monster: Dict[int, Monster] = {
-            0: Monster('Charmadillo', 30),
-            1: Monster('Friolera', 29),
-            2: Monster('Larvea', 3),
-            3: Monster('Atrox', 24),
-            4: Monster('Sparchu', 10),
-            5: Monster('Gulfin', 24),
-            6: Monster('Jacana', 2),
-            7: Monster('Pouch', 3)
-        }
+        player_monster_data = Save().get("team", [])
+        self.player_monster: Dict[int, Monster] = {}
+        for i in range(len(player_monster_data)):
+            self.player_monster[i] = Monster(*player_monster_data[i])
 
         # groups
         self.all_sprites = AllSprites()
@@ -64,7 +58,7 @@ class Game:
 
         # overlays
         self.dialog_tree = None
-        self.menu = Menu(self.fonts)
+        self.menu = Menu(self.player_monster, self.monster_frames, self.fonts)
         self.menu_open = False
         # self.pokedex = Pokedex(self.player_monster, self.fonts, self.monster_frames)
         # self.pokedex_open = False
@@ -166,7 +160,7 @@ class Game:
                     frames = self.overworld_frames['characters'][obj.properties['graphic']],
                     groups = [self.all_sprites, self.collision_sprites, self.character_sprites],
                     facing_direction=obj.properties['direction'],
-                    character_data=TRAINER_DATA[obj.properties['character_id']],
+                    character_data=TrainerData.get(obj.properties['character_id']),
                     player = self.player,
                     create_dialog = self.create_dialog,
                     collision_sprites = self.collision_sprites,

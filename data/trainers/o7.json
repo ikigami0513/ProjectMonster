@@ -1,0 +1,36 @@
+{
+    "id": "o7",
+    "monsters": {
+        "0": [
+            "Friolera",
+            25
+        ],
+        "1": [
+            "Gulfin",
+            20
+        ],
+        "2": [
+            "Atrox",
+            24
+        ],
+        "3": [
+            "Finiette",
+            30
+        ]
+    },
+    "dialog": {
+        "default": [
+            "There are no bugs in the snow!"
+        ],
+        "defeated": [
+            "Maybe I should check a vulcano...",
+            "It's so cold in here"
+        ]
+    },
+    "directions": [
+        "right"
+    ],
+    "look_around": false,
+    "defeated": false,
+    "biome": "ice"
+}

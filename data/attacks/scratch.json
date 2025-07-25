@@ -1,0 +1,8 @@
+{
+    "target": "opponent",
+    "amount": 1.2,
+    "cost": 20,
+    "element": "normal",
+    "animation": "scratch",
+    "name": "scratch"
+}

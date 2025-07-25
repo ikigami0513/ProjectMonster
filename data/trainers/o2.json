@@ -1,0 +1,38 @@
+{
+    "id": "o2",
+    "monsters": {
+        "0": [
+            "Atrox",
+            14
+        ],
+        "1": [
+            "Pouch",
+            15
+        ],
+        "2": [
+            "Draem",
+            13
+        ],
+        "3": [
+            "Cindrill",
+            13
+        ]
+    },
+    "dialog": {
+        "default": [
+            "I don't like sand",
+            "It's coarse and rough",
+            "oh god, fight"
+        ],
+        "defeated": [
+            "May the force be with you"
+        ]
+    },
+    "directions": [
+        "left",
+        "down"
+    ],
+    "look_around": false,
+    "defeated": false,
+    "biome": "sand"
+}

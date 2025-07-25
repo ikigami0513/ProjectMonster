@@ -1,0 +1,30 @@
+{
+    "id": "o1",
+    "monsters": {
+        "0": [
+            "Jacana",
+            14
+        ],
+        "1": [
+            "Cleaf",
+            15
+        ]
+    },
+    "dialog": {
+        "default": [
+            "Hey, how are you?",
+            "Oh, so you want to fight?",
+            "FIGHT!"
+        ],
+        "defeated": [
+            "You are very strong!",
+            "Let's fight again sometime?"
+        ]
+    },
+    "directions": [
+        "down"
+    ],
+    "look_around": true,
+    "defeated": false,
+    "biome": "forest"
+}

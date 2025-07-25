@@ -1,0 +1,37 @@
+{
+    "id": "o4",
+    "monsters": {
+        "0": [
+            "Friolera",
+            25
+        ],
+        "1": [
+            "Gulfin",
+            20
+        ],
+        "2": [
+            "Atrox",
+            24
+        ],
+        "3": [
+            "Finiette",
+            30
+        ]
+    },
+    "dialog": {
+        "default": [
+            "I love skating!",
+            "FIGHT!"
+        ],
+        "defeated": [
+            "Good luck with the boss",
+            "It's so cold in here"
+        ]
+    },
+    "directions": [
+        "right"
+    ],
+    "look_around": true,
+    "defeated": false,
+    "biome": "forest"
+}

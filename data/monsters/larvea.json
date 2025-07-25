@@ -1,0 +1,21 @@
+{
+    "stats": {
+        "element": "plant",
+        "max_health": 15,
+        "max_energy": 17,
+        "attack": 1,
+        "defense": 8,
+        "recovery": 5,
+        "speed": 1
+    },
+    "abilities": {
+        "0": "scratch",
+        "5": "spark"
+    },
+    "evolve": [
+        "Cleaf",
+        4
+    ],
+    "number": 10,
+    "name": "Larvea"
+}

@@ -1,4 +1,4 @@
-from game_data import MONSTER_DATA, ATTACK_DATA
+from game_data import MonsterData, AttackData
 from random import randint
 from typing import *
 
@@ -10,18 +10,19 @@ class Monster:
         self.paused = False
 
         # stats
-        self.element: str = MONSTER_DATA[name]['stats']['element']
-        self.base_stats: Dict[str, int] = MONSTER_DATA[name]['stats']
+        monster_data = MonsterData.get(name)
+        self.element: str = monster_data['stats']['element']
+        self.base_stats: Dict[str, int] = monster_data['stats']
         self.health: int = self.base_stats['max_health'] * self.level
         self.energy: int = self.base_stats['max_energy'] * self.level
         self.initiative = randint(0, 100)
-        self.abilities: Dict[int, str] = MONSTER_DATA[name]['abilities']
+        self.abilities: Dict[int, str] = monster_data['abilities']
         self.defending = False
 
         # experience
         self.xp = 0
         self.level_up = self.level * 150
-        self.evolution = MONSTER_DATA[self.name]['evolve']
+        self.evolution = monster_data['evolve']
 
     def __repr__(self) -> str:
         return f'Monster: {self.name}, Lvl: {self.level}'
@@ -41,9 +42,9 @@ class Monster:
     
     def get_abilities(self, all: bool = True) -> List[str]:
         if all:
-            return [ability for lvl, ability in self.abilities.items() if self.level >= lvl]
+            return [ability for lvl, ability in self.abilities.items() if self.level >= int(lvl)]
         else:
-            return [ability for lvl, ability in self.abilities.items() if self.level >= lvl and ATTACK_DATA[ability]['cost'] < self.energy]
+            return [ability for lvl, ability in self.abilities.items() if self.level >= int(lvl) and AttackData.get(ability)['cost'] < self.energy]
 
     def get_info(self):
         return (
@@ -53,10 +54,10 @@ class Monster:
         )
     
     def reduce_energy(self, attack: str):
-        self.energy -= ATTACK_DATA[attack]['cost']
+        self.energy -= AttackData.get(attack)['cost']
     
     def get_base_damage(self, attack: str) -> int:
-        return self.get_stat('attack') * ATTACK_DATA[attack]['amount']
+        return self.get_stat('attack') * AttackData.get(attack)['amount']
 
     def update_xp(self, amount: int) -> None:
         if self.level_up - self.xp > amount:

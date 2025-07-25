@@ -1,0 +1,18 @@
+{
+    "stats": {
+        "element": "fire",
+        "max_health": 12,
+        "max_energy": 19,
+        "attack": 3,
+        "defense": 10,
+        "recovery": 6,
+        "speed": 2.6
+    },
+    "abilities": {
+        "0": "scratch",
+        "5": "spark"
+    },
+    "evolve": null,
+    "number": 15,
+    "name": "Jacana"
+}

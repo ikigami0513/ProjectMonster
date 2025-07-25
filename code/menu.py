@@ -1,11 +1,16 @@
 import pygame
 from typing import Dict
 from settings import *
+from team import Team
+from encyclopedia import Encyclopedia
+from monster import Monster
 
 
 class Menu:
-    def __init__(self, fonts: Dict[str, pygame.font.Font]):
+    def __init__(self, monsters: Dict[int, Monster], monster_frames: Dict[str, Dict[str, pygame.Surface]], fonts: Dict[str, pygame.font.Font]):
         self.display_surface = pygame.display.get_surface()
+        self.monsters = monsters
+        self.monster_frames = monster_frames
         self.fonts = fonts
 
         self.tint_surf = pygame.Surface((self.display_surface.get_width(), self.display_surface.get_height()))
@@ -26,12 +31,29 @@ class Menu:
         self.item_height = (self.main_rect.height - (self.visible_items + 1) * self.item_spacing) / self.visible_items
         self.index = 0
 
+        # option
+        self.current_menu = None
+        self.team = Team(self.monsters, self.fonts, self.monster_frames)
+        self.encyclopedia = Encyclopedia(self.monster_frames, self.fonts)
+
     def input(self):
         keys = pygame.key.get_just_pressed()
         if keys[pygame.K_UP]:
             self.index -= 1
         if keys[pygame.K_DOWN]:
             self.index += 1
+        if keys[pygame.K_SPACE]:
+            option = self.options[self.index]
+            if option == "Team":
+                self.current_menu = self.team
+            elif option == "Inventory":
+                print("Inventory")
+            elif option == "Encyclopedia":
+                self.current_menu = self.encyclopedia
+            elif option == "Save":
+                print("Save")
+            elif option == "Quit":
+                print("Quit")
 
         # Loop index around
         self.index = self.index % len(self.options)
@@ -60,6 +82,9 @@ class Menu:
             self.display_surface.blit(text_surf, text_rect)
 
     def update(self, dt: float):
-        self.input()
-        self.display_surface.blit(self.tint_surf, (0, 0))
-        self.display()
+        if self.current_menu:
+            self.current_menu.update(dt)
+        else:
+            self.input()
+            self.display_surface.blit(self.tint_surf, (0, 0))
+            self.display()

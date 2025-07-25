@@ -1,0 +1,27 @@
+{
+    "position": {
+        "world": "overworld",
+        "x": 4223.94,
+        "y": 3661.26
+    },
+    "team": [
+        ["Charmadillo", 50],
+        ["Friolera", 29],
+        ["Larvea", 3],
+        ["Atrox", 24],
+        ["Sparchu", 10],
+        ["Gulfin", 24],
+        ["Jacana", 2],
+        ["Pouch", 3]
+    ],
+    "encyclopedia": [
+        {
+            "monster": "plumette",
+            "status": "catch"
+        },
+        {
+            "monster": "sparchu",
+            "status": "view"
+        }
+    ]
+}

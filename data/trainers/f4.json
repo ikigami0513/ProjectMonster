@@ -1,0 +1,37 @@
+{
+    "id": "f4",
+    "monsters": {
+        "0": [
+            "Cindrill",
+            15
+        ],
+        "1": [
+            "Jacana",
+            20
+        ],
+        "2": [
+            "Draem",
+            24
+        ],
+        "3": [
+            "Atrox",
+            30
+        ]
+    },
+    "dialog": {
+        "default": [
+            "This place feels kinda warm...",
+            "fight!"
+        ],
+        "defeated": [
+            "Congratultion!"
+        ]
+    },
+    "directions": [
+        "up",
+        "right"
+    ],
+    "look_around": true,
+    "defeated": false,
+    "biome": "sand"
+}

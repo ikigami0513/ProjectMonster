@@ -1,0 +1,21 @@
+{
+    "stats": {
+        "element": "water",
+        "max_health": 27,
+        "max_energy": 23,
+        "attack": 4,
+        "defense": 17,
+        "recovery": 7,
+        "speed": 2
+    },
+    "abilities": {
+        "0": "scratch",
+        "5": "spark",
+        "15": "splash",
+        "20": "ice",
+        "25": "heal"
+    },
+    "evolve": null,
+    "number": 14,
+    "name": "Friolera"
+}

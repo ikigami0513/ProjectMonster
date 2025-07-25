@@ -1,0 +1,21 @@
+{
+    "stats": {
+        "element": "water",
+        "max_health": 13,
+        "max_energy": 17,
+        "attack": 2,
+        "defense": 8,
+        "recovery": 5,
+        "speed": 1.8
+    },
+    "abilities": {
+        "0": "scratch",
+        "5": "spark"
+    },
+    "evolve": [
+        "Gulfin",
+        34
+    ],
+    "number": 7,
+    "name": "Finsta"
+}

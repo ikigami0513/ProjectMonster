@@ -1,0 +1,40 @@
+{
+    "id": "o3",
+    "monsters": {
+        "0": [
+            "Atrox",
+            14
+        ],
+        "1": [
+            "Pouch",
+            15
+        ],
+        "2": [
+            "Draem",
+            13
+        ],
+        "3": [
+            "Cindrill",
+            13
+        ]
+    },
+    "dialog": {
+        "default": [
+            "I love skating!",
+            "FIGHT!"
+        ],
+        "defeated": [
+            "Good luck with the boss",
+            "It's so cold in here"
+        ]
+    },
+    "directions": [
+        "left",
+        "right",
+        "up",
+        "down"
+    ],
+    "look_around": true,
+    "defeated": false,
+    "biome": "sand"
+}
