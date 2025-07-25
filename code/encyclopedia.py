@@ -66,7 +66,8 @@ class Encyclopedia:
         bg_rect = pygame.FRect(self.main_rect.topleft, (self.list_width, self.main_rect.height))
         pygame.draw.rect(self.display_surface, COLORS['gray'], bg_rect, 0, 0, 12, 0, 12, 0)
 
-        v_offset = 0 if self.index < self.visible_items else -(self.index - self.visible_items + 1) * self.item_height
+        half_visible_items = self.visible_items * 0.5 + 1
+        v_offset = 0 if self.index < half_visible_items else -(self.index - half_visible_items + 1) * self.item_height
         for index, monster in enumerate(self.monsters_list):
             # colors
             bg_color = COLORS['gray'] if self.index != index else COLORS['light']
@@ -135,7 +136,7 @@ class Encyclopedia:
         self.display_surface.blit(monster_surf, monster_rect)
 
         # name
-        name_surf = self.fonts['bold'].render(monster["data"]["name"], False, COLORS['white'])
+        name_surf = self.fonts['bold'].render(f"{format_with_leading_zeros(monster['data']['number'])} # {monster['data']['name']}", False, COLORS['white'])
         name_rect = name_surf.get_frect(topleft = top_rect.topleft + pygame.Vector2(10, 10))
         self.display_surface.blit(name_surf, name_rect)
 

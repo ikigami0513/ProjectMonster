@@ -60,7 +60,6 @@ class Game:
         # overlays
         self.dialog_tree = None
         self.menu = Menu(self.player_monster, self.monster_frames, self.fonts)
-        self.menu_open = False
         # self.pokedex = Pokedex(self.player_monster, self.fonts, self.monster_frames)
         # self.pokedex_open = False
         self.battle = None
@@ -182,8 +181,11 @@ class Game:
                         character.can_rotate = False
 
             if keys[pygame.K_RETURN]:
-                self.menu_open = not self.menu_open
-                self.player.blocked = not self.player.blocked
+                if self.menu.current_menu:
+                    self.menu.current_menu = None
+                else:
+                    self.menu.is_open = not self.menu.is_open
+                    self.player.blocked = not self.player.blocked
 
     def create_dialog(self, character: Character) -> None:
         if not self.dialog_tree:
@@ -323,7 +325,7 @@ class Game:
             # overlays
             if self.dialog_tree:
                 self.dialog_tree.update()
-            if self.menu_open:
+            if self.menu.is_open:
                 self.menu.update(dt)
             if self.battle:
                 self.battle.update(dt)

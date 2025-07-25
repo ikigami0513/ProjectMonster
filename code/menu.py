@@ -12,6 +12,7 @@ class Menu:
         self.monsters = monsters
         self.monster_frames = monster_frames
         self.fonts = fonts
+        self.is_open = False
 
         self.tint_surf = pygame.Surface((self.display_surface.get_width(), self.display_surface.get_height()))
         self.tint_surf.set_alpha(200)
