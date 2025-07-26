@@ -60,8 +60,6 @@ class Game:
         # overlays
         self.dialog_tree = None
         self.menu = Menu(self.player_monster, self.monster_frames, self.fonts)
-        # self.pokedex = Pokedex(self.player_monster, self.fonts, self.monster_frames)
-        # self.pokedex_open = False
         self.battle = None
         self.evolution = None
 
